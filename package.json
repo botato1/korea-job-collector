@@ -1,0 +1,12 @@
+{
+  "name": "korea-job-collector",
+  "version": "0.1.0",
+  "private": true,
+  "description": "개인 취업 준비용 채용공고 수집·관리 도구 (career-ops 플러그인)",
+  "license": "MIT",
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "test": "node --test plugins/saramin/test/lib.test.mjs plugins/saramin/test/ingest.test.mjs && node plugins/saramin/test/smoke.mjs"
+  }
+}

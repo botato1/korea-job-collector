@@ -1,0 +1,14 @@
+{
+  "id": "saramin",
+  "name": "Saramin ingest",
+  "version": "0.1.0",
+  "apiVersion": 1,
+  "description": "Pull entry-level postings from the Saramin Open API into your pipeline (read-only, your access key).",
+  "hooks": ["ingest"],
+  "jobPostings": true,
+  "requiredEnv": ["SARAMIN_ACCESS_KEY"],
+  "allowedHosts": ["oapi.saramin.co.kr"],
+  "skill": "skill.md",
+  "humanInTheLoop": true,
+  "homepage": "https://github.com/botato1/korea-job-collector"
+}

@@ -1,0 +1,82 @@
+{
+  "_comment": "Synthetic fixture shaped after the Saramin job-search API spec (https://oapi.saramin.co.kr/guide/job-search). Not real postings.",
+  "jobs": {
+    "count": 4,
+    "start": 0,
+    "total": "4",
+    "job": [
+      {
+        "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?rec_idx=10000001",
+        "active": 1,
+        "company": { "detail": { "href": "https://www.saramin.co.kr/zf_user/company-info/view?csn=AAA", "name": "가상테크(주)" } },
+        "position": {
+          "title": "[신입] AI 엔지니어 (LLM)",
+          "location": { "code": "102190", "name": "경기 &gt; 성남시 분당구" },
+          "job-type": { "code": "1", "name": "정규직" },
+          "experience-level": { "code": 1, "min": 0, "max": 0, "name": "신입" },
+          "required-education-level": { "code": "8", "name": "대학교졸업(4년)이상" }
+        },
+        "keyword": "AI,LLM,Python",
+        "salary": { "code": "0", "name": "회사내규에 따름" },
+        "id": "10000001",
+        "posting-timestamp": "1763600000",
+        "expiration-timestamp": "1764600000",
+        "close-type": { "code": "1", "name": "접수마감일" }
+      },
+      {
+        "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?rec_idx=10000002",
+        "active": 1,
+        "company": { "detail": { "name": "예시소프트" } },
+        "position": {
+          "title": "백엔드 개발자 (경력 5년 이상)",
+          "location": { "code": "101000", "name": "서울 &gt; 강남구" },
+          "job-type": { "code": "1", "name": "정규직" },
+          "experience-level": { "code": 2, "min": 5, "max": 0, "name": "경력 5년↑" },
+          "required-education-level": { "code": "0", "name": "학력무관" }
+        },
+        "keyword": "Java,Spring",
+        "salary": { "code": "0", "name": "회사내규에 따름" },
+        "id": "10000002",
+        "posting-timestamp": "1763600000",
+        "expiration-timestamp": "1764600000",
+        "close-type": { "code": "1", "name": "접수마감일" }
+      },
+      {
+        "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?rec_idx=10000003",
+        "active": 1,
+        "company": { "detail": { "name": "샘플시스템즈" } },
+        "position": {
+          "title": "시험자동화 SW 엔지니어 (신입/경력)",
+          "location": { "code": "102410", "name": "경기 &gt; 용인시 기흥구" },
+          "job-type": { "code": "1", "name": "정규직" },
+          "experience-level": { "code": 3, "min": 0, "max": 0, "name": "신입·경력" },
+          "required-education-level": { "code": "8", "name": "대학교졸업(4년)이상" }
+        },
+        "keyword": "C#,시험자동화",
+        "salary": { "code": "10", "name": "4,000~4,200만원" },
+        "id": "10000003",
+        "posting-timestamp": "1763600000",
+        "expiration-timestamp": "1764600000",
+        "close-type": { "code": "1", "name": "접수마감일" }
+      },
+      {
+        "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?rec_idx=10000004",
+        "active": 0,
+        "company": { "detail": { "name": "마감된회사" } },
+        "position": {
+          "title": "인프라 엔지니어 (경력무관)",
+          "location": { "code": "101000", "name": "서울 &gt; 마포구" },
+          "job-type": { "code": "1", "name": "정규직" },
+          "experience-level": { "code": 0, "min": 0, "max": 0, "name": "경력무관" },
+          "required-education-level": { "code": "0", "name": "학력무관" }
+        },
+        "keyword": "Linux,Docker",
+        "salary": { "code": "0", "name": "회사내규에 따름" },
+        "id": "10000004",
+        "posting-timestamp": "1763600000",
+        "expiration-timestamp": "1763000000",
+        "close-type": { "code": "1", "name": "접수마감일" }
+      }
+    ]
+  }
+}
