@@ -30,3 +30,16 @@ plugins:
     daily_call_budget: 300     # 하루 호출 상한 (API 한도 500)
     published_days: 7          # 최근 N일 안에 등록된 공고만 (0이면 제한 없음)
     exclude_headhunting: true  # 헤드헌팅·파견업체 공고 제외
+
+  # 경기도 잡아바 채용정보 (경기데이터드림). 키: career-ops/.env 의 GG_OPENAPI_KEY
+  # API에 검색 조건이 없어서 전체를 넘겨 받으며 아래 조건으로 걸러낸다.
+  jobaba:
+    enabled: true
+    # 근무지역(WORK_REGION_CONT)에 이 이름이 들어 있으면 남긴다. 비우면 전체.
+    # 용인시는 처인구까지 포함되므로 평가 단계에서 거른다.
+    regions: ["성남시", "용인시", "수원시", "의왕시", "안양시", "과천시", "군포시", "광명시", "부천시"]
+    # 경력(CAREER_DIV)에 이 말이 들어 있으면 남긴다: 신입, 신입/경력, 경력무관
+    career: ["신입", "무관"]
+    page_size: 1000            # 한 번에 받을 행 수 (최대 1000)
+    max_pages: 50              # 최대 페이지 수
+    stop_after_stale_pages: 3  # 마감 공고만 있는 페이지가 연속 N번이면 중단 (0이면 끔)

@@ -1,0 +1,14 @@
+{
+  "id": "jobaba",
+  "name": "Gyeonggi Jobaba ingest",
+  "version": "0.1.0",
+  "apiVersion": 1,
+  "description": "Pull open entry-level postings from the Gyeonggi-do Jobaba Open API (경기데이터드림) into your pipeline (read-only, your key).",
+  "hooks": ["ingest"],
+  "jobPostings": true,
+  "requiredEnv": ["GG_OPENAPI_KEY"],
+  "allowedHosts": ["openapi.gg.go.kr"],
+  "skill": "skill.md",
+  "humanInTheLoop": true,
+  "homepage": "https://github.com/botato1/korea-job-collector"
+}
