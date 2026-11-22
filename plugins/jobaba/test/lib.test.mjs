@@ -2,7 +2,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  normalizeSettings, buildUrl, parseResponse, filterRows, toLead, todayYmd,
+  normalizeSettings, buildUrl, parseResponse, filterRows, toLead, todayYmd, pagePlan,
 } from '../_lib.mjs';
 
 const row = (o = {}) => ({
@@ -16,7 +16,12 @@ test('normalizeSettings fills defaults and clamps', () => {
   assert.ok(s.regions.includes('성남시'));
   assert.deepEqual(s.career, ['신입', '무관']);
   assert.equal(s.page_size, 1000);
-  assert.equal(s.max_pages, 50);
+  assert.equal(s.max_pages, 100);
+  assert.equal(s.stale_open_ratio, 0.05);
+  assert.equal(s.concurrency, 8);
+  assert.equal(s.time_budget_ms, 12000);
+  assert.equal(normalizeSettings({ time_budget_ms: 60000 }).time_budget_ms, 14000);
+  assert.ok(s.regions.includes('서울'));
   assert.equal(s.stop_after_stale_pages, 3);
   const c = normalizeSettings({ page_size: 99999, max_pages: 0, regions: ['수원시'] });
   assert.equal(c.page_size, 1000);
@@ -25,7 +30,7 @@ test('normalizeSettings fills defaults and clamps', () => {
 });
 
 test('buildUrl sets KEY, Type=json, pIndex, pSize', () => {
-  const u = new URL(buildUrl({ key: 'K', pIndex: 2, settings: normalizeSettings({}) }));
+  const u = new URL(buildUrl({ key: 'K', pIndex: 2, pageSize: 1000 }));
   assert.equal(u.origin + u.pathname, 'https://openapi.gg.go.kr/GGJOBABARECRUSTM');
   assert.equal(u.searchParams.get('KEY'), 'K');
   assert.equal(u.searchParams.get('Type'), 'json');
@@ -100,4 +105,10 @@ test('toLead maps fields to the career-ops Job shape', () => {
 
 test('todayYmd formats a local date', () => {
   assert.equal(todayYmd(new Date(2026, 10, 3)), '20261103');
+});
+
+test('pagePlan lists pages from the last one backwards, capped', () => {
+  assert.deepEqual(pagePlan(2500, 1000, 10), [3, 2, 1]);
+  assert.deepEqual(pagePlan(461409, 1000, 3), [462, 461, 460]);
+  assert.deepEqual(pagePlan(0, 1000, 10), []);
 });

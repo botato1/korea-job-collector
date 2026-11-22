@@ -7,8 +7,8 @@
 export const API_URL = 'https://openapi.gg.go.kr/GGJOBABARECRUSTM';
 export const MAX_PAGE_SIZE = 1000; // 경기데이터드림 pSize upper bound
 
-/** 성남(판교·분당), 용인, 수원, 의왕, 안양, 과천, 군포, 광명, 부천 */
-export const DEFAULT_REGIONS = ['성남시', '용인시', '수원시', '의왕시', '안양시', '과천시', '군포시', '광명시', '부천시'];
+/** 서울, 성남(판교·분당), 용인, 수원, 의왕, 안양, 과천, 군포, 광명, 부천 */
+export const DEFAULT_REGIONS = ['서울', '성남시', '용인시', '수원시', '의왕시', '안양시', '과천시', '군포시', '광명시', '부천시'];
 /** CAREER_DIV substrings: 신입, 신입/경력, 경력무관 */
 export const DEFAULT_CAREER = ['신입', '무관'];
 
@@ -25,18 +25,34 @@ export function normalizeSettings(raw = {}) {
     regions: strList(raw.regions, DEFAULT_REGIONS),
     career: strList(raw.career, DEFAULT_CAREER),
     page_size: clamp(raw.page_size, 1, MAX_PAGE_SIZE, MAX_PAGE_SIZE),
-    max_pages: clamp(raw.max_pages, 1, 1000, 50),
+    max_pages: clamp(raw.max_pages, 1, 1000, 100),
     stop_after_stale_pages: clamp(raw.stop_after_stale_pages, 0, 1000, 3),
+    stale_open_ratio: Math.min(1, Math.max(0, Number(raw.stale_open_ratio ?? 0.05) || 0)),
+    concurrency: clamp(raw.concurrency, 1, 10, 8),
+    // career-ops kills an ingest hook after 15 s; stop early enough to return.
+    time_budget_ms: clamp(raw.time_budget_ms, 1000, 14000, 12000),
   };
 }
 
-/** @param {{key: string, pIndex: number, settings: ReturnType<typeof normalizeSettings>}} a */
-export function buildUrl({ key, pIndex, settings }) {
+/**
+ * Pages to read, newest first. The feed is appended to over time (oldest rows
+ * on page 1, newest on the last page), so read from the end backwards.
+ * @param {number} total @param {number} pageSize @param {number} maxPages
+ */
+export function pagePlan(total, pageSize, maxPages) {
+  const last = Math.ceil(Math.max(0, total) / pageSize);
+  const out = [];
+  for (let p = last; p >= 1 && out.length < maxPages; p--) out.push(p);
+  return out;
+}
+
+/** @param {{key: string, pIndex: number, pageSize: number}} a */
+export function buildUrl({ key, pIndex, pageSize }) {
   const u = new URL(API_URL);
   u.searchParams.set('KEY', key);
   u.searchParams.set('Type', 'json');
   u.searchParams.set('pIndex', String(pIndex));
-  u.searchParams.set('pSize', String(settings.page_size));
+  u.searchParams.set('pSize', String(pageSize));
   return u.toString();
 }
 
